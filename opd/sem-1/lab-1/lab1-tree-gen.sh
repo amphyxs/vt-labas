@@ -28,9 +28,9 @@ mkdir magmortar
 mkdir buizel
 cd ..
 touch swinub2
-cat ../templates/swinub2>swinub2
+echo -e "Тип\nпокемона ICE GROUND" | cat >swinub2
 touch wartortle7
-cat ../templates/wartortle7>wartortle7
+echo -e "weigth=49.6 height=39.0 atk=6 def=8" | cat >wartortle7
 # Task 2
 chmod u=r charmander3
 chmod go= charmander3

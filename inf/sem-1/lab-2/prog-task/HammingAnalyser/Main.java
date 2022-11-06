@@ -15,7 +15,7 @@ final class Main {
                 msg = new Message(msgStr);            
                 messageCreated = true;
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println("Невозможно обработать сообщение");
             }
         } while (!messageCreated);
         printErrorAndFix(msg);
@@ -87,7 +87,7 @@ class Message {
         int r = getNumberOfCheckingBits(n);
         String S = "";
         for (int i = 1; i <= r; i++)
-        S += calculateSyndrome(i);
+            S += calculateSyndrome(i);
         this.S = S;
     }
     
