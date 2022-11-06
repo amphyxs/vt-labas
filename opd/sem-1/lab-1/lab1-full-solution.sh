@@ -91,13 +91,13 @@ touch baobab
 cat ../templates/baobab>baobab
 touch omastar5/bulbazavr
 cat ../templates/bulbazavr>omastar5/bulbazavr
-wc -l b* */b* */*/b* 2>/tmp/errors-lab0 | grep -o [0-9][0-9]*[[:space:]] | tail -r | tail -n +2 | tail -r | sort -r
+wc -l b* */b* */*/b* 2>/tmp/errors-lab0 | tail -r | tail -n +2 | tail -r | sort -r
 echo "Task 4.2 output:"
 ls -lR | grep ^-.*be.*$ | sort -nk 2
 echo "Task 4.3 output:"
 cat *t */*t */*/*t 2>&1 | sort -r
 echo "Task 4.4 output:"
-ls -ltr *t */*t 2>/tmp/errors-lab0 | grep ^-.*t$
+ls -ltr *t */*t */*/*t 2>/tmp/errors-lab0 | grep ^-.*t$
 echo "Task 4.5 output:"
 cat swinub2 2>&1 | grep -in NE
 echo "Task 4.6 output:"
@@ -114,3 +114,9 @@ rm -dr chimecho6
 rmdir omastar5/magmortar
 chmod -R 777 omastar5/magmortar
 rm -dr omastar5/magmortar
+# Task *
+cat * */* */*/* 2>/dev/null | grep "\([a-zA-Z]\)\1"
+# Symlink
+ls -lR | grep "\-> wartortle7"
+# Hard link                     
+ls -liR | grep "7014238"

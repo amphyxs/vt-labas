@@ -1,0 +1,29 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+dependencies {
+    implementation files('Pokemon.jar')
+}
+
+sourceSets {
+    main.java.srcDirs = []
+    main.java.srcDirs += "src"
+    main.java.srcDirs += "src/moves"
+    main.java.srcDirs += "src/pokemons"
+}
+
+tasks.register('makeJar', Jar) {
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+
+    manifest {
+        attributes(
+                'Main-Class': 'src.Main',
+                'Class-Path': 'Pokemon.jar'
+        )
+    }
+}
