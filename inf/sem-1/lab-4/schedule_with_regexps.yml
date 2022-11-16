@@ -1,0 +1,20 @@
+day: "Среда"
+subjects:
+  - subjectName: "Информатика (лаб)"
+    beginTime: "11:40:00"
+    endTime : "13:10"
+    weekNumbers: [2, 4, 6, "8", 10, 12, 14, 16]
+    auditorium: "2308 (бывш. 306) ауд."
+    place: "Кронверкский пр., д.49, лит.А"
+    isEvenWeek: true
+    teacher: "Белозубов Александр Владимирович"
+    format: "очно-дистанционный"
+  - subjectName: "Информатика (лаб)"
+    beginTime: "13:30"
+    endTime: "15:00"
+    weekNumbers: [2, 4, 6, 8, 10, 12, 14, 16]
+    auditorium: "2308 (бывш. 306) ауд."
+    place: "Кронверкский пр., д.49, лит.А"
+    isEvenWeek: true
+    teacher: "Белозубов Александр Владимирович"
+    format: "очно-дистанционный"

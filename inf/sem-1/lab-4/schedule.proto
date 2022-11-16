@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+message Schedule {
+    optional string day = 1;
+
+    message Subject {
+        optional string subjectName = 1;
+        optional string beginTime = 2;
+        optional string endTime = 3;
+        repeated int32 weekNumbers = 4;
+        optional string auditorium = 5;
+        optional string place = 6;
+        optional bool isEvenWeek = 7;
+        optional string teacher = 8;
+        optional string format = 9;
+    }
+
+    repeated Subject subjects = 2;
+}
