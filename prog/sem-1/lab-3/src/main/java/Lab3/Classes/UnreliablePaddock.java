@@ -1,5 +1,6 @@
 package Lab3.Classes;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -7,19 +8,19 @@ import java.util.Objects;
 import Lab3.Interfaces.*;
 
 public class UnreliablePaddock {
-    ArrayList<Dog> dogs;
+    private final List<Dog> dogs = new ArrayList<Dog>();
 
-    public void setDogs(Dog[] dogs) {
-        this.dogs = new ArrayList<Dog>(Arrays.asList(dogs));
+    public void addDogs(Dog... dogs) {
+        this.dogs.addAll(Arrays.asList(dogs));
         System.out.printf("%s открылся и в него посадили: %s\n", toString(), dogs[0].toString());
     }
 
     public Dog[] getDogs() {
-        // TODO: check if it works
-        return dogs.toArray(new Dog[] {});
+        return this.dogs.toArray(new Dog[] {});
     }
 
     public boolean deleteDog(Dog dogToDel) {
+        // TODO: применить паттерн "Двойной диспетчерезации (паттерн посетитель)"
         // If the dog found - deletes it, describes the story and returns true, otherwise - returns false
         if (dogs.remove(dogToDel)) {
             System.out.printf("%s разрушен и из него вырвались: %s\n", toString(), dogToDel.toString());

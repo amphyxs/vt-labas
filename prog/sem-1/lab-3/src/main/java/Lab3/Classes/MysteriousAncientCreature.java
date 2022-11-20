@@ -5,6 +5,7 @@ import Lab3.Enums.*;
 import Lab3.Interfaces.*;
 
 public class MysteriousAncientCreature implements Provokable {
+
     public Corpse kill(Killable k) {
         crippleBody(k);
         mangleBody(k);
@@ -12,13 +13,13 @@ public class MysteriousAncientCreature implements Provokable {
     }
 
     public void watchDogReaction(Dog d) {
-        provokeReaction(d, ReactionType.PATHOLOGICAL_HATE);
-        describeReaction(d, ReactionType.PATHOLOGICAL_HATE);
+        Provokable.provokeReaction(d, ReactionType.PATHOLOGICAL_HATE);
+        Provokable.describeReaction(d, ReactionType.PATHOLOGICAL_HATE, toString(), true);
     }
 
-    public void disturbBySmell(Reactionable r) {
-        provokeReaction(r, ReactionType.DISQUIETUDE);
-        describeReaction(r, ReactionType.DISQUIETUDE, "Источаемый кошмарными тварями едкий запах");
+    public void disturbBySmell(Dog r) {
+        Provokable.provokeReaction(r, ReactionType.DISQUIETUDE);
+        Provokable.describeReaction(r, ReactionType.DISQUIETUDE, toString(), true);
     }
 
     protected void crippleBody(Killable k) {
@@ -27,28 +28,6 @@ public class MysteriousAncientCreature implements Provokable {
 
     protected  void mangleBody(Killable k) {
         System.out.printf("%s кромсает тело: %s\n", toString(), k.toString());
-    }
-
-    @Override
-    public void provokeReaction(Reactionable r, ReactionType t) {
-        r.setReaction(t);
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t, String provoker) {
-        switch (t) {
-            case PATHOLOGICAL_HATE:
-                System.out.printf("%s вызывает патологическую неприязнь у: %s\n", provoker, r.toString());
-                break;
-            case DISQUIETUDE:
-                System.out.printf("%s вызывает беспокойство у: %s\n", provoker, r.toString());
-                break;
-        }
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t) {
-        describeReaction(r, t, toString());
     }
 
     @Override

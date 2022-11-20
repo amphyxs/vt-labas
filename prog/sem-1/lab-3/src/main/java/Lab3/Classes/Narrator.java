@@ -2,7 +2,7 @@ package Lab3.Classes;
 
 import java.util.LinkedHashSet;
 
-import Lab3.AbstractClasses.Corpse;
+import Lab3.AbstractClasses.*;
 import Lab3.Interfaces.*;
 
 public class Narrator extends Human {
@@ -53,7 +53,7 @@ public class Narrator extends Human {
     }
 
     public void say(String s) {
-        System.out.printf("%s говорит: %s\n", toString(), s);
+        System.out.printf("%s говорит: \"%s\"\n", toString(), s);
     }
 
     public void beginBackstory() {

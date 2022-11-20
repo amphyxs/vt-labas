@@ -3,15 +3,10 @@ package Lab3.Classes;
 import Lab3.Interfaces.*;
 
 public class DelicateThings implements Hideable {
-    // Singleton
-    private static DelicateThings instance;
+    Boolean isDangerous = false;
 
-    private DelicateThings() { }
-
-    public static DelicateThings getInstance() {
-        if (instance == null)
-            instance = new DelicateThings();
-        return instance;
+    public void setDangerous(boolean dangerous) {
+        isDangerous = dangerous;
     }
 
     @Override
@@ -21,11 +16,13 @@ public class DelicateThings implements Hideable {
 
     @Override
     public int hashCode() {
-        return 0;
+        return isDangerous.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this.getClass() == obj.getClass();
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        return isDangerous.equals(((DelicateThings) obj).isDangerous);
     }
 }
