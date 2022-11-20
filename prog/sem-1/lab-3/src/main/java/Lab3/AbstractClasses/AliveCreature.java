@@ -8,7 +8,6 @@ public abstract class AliveCreature implements Killable, Reactionable, Nameable 
     protected String name;
 
     public AliveCreature() {
-        // TODO: auto counting
         this("Безымянный");
     }
 

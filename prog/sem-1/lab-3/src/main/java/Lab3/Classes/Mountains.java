@@ -1,55 +1,35 @@
 package Lab3.Classes;
 
+import Lab3.AbstractClasses.AliveCreature;
 import Lab3.Enums.*;
 import Lab3.Interfaces.*;
 
 public class Mountains implements Provokable {
-    private static Mountains instance;
-
-    private Mountains() { }
+    String description;
 
     public void makeMad(Human h) {
-        provokeReaction(h, ReactionType.MADNESS);
-        describeReaction(h, ReactionType.MADNESS);
+        Provokable.provokeReaction(h, ReactionType.MADNESS);
+        Provokable.describeReaction(h, ReactionType.MADNESS, toString(), false);
     }
 
-    @Override
-    public void provokeReaction(Reactionable r, ReactionType t) {
-        r.setReaction(t);
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t, String provoker) {
-        switch (t) {
-            case MADNESS:
-                System.out.printf("%s сводят с ума: %s\n", provoker, r.toString());
-                break;
-        }
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t) {
-        describeReaction(r, t, toString());
-    }
-
-    public static Mountains getInstance() {
-        if (instance == null)
-            instance = new Mountains();
-        return instance;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Чертовы горы";
+        return String.format("%s горы", description);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return description.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this.getClass() == obj.getClass();
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        return description.equals(((Mountains) obj).description);
     }
 }

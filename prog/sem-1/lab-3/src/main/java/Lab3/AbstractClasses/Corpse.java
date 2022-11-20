@@ -24,8 +24,8 @@ public abstract class Corpse implements Hideable, Provokable {
     }
 
     public void confuse(Human h) {
-        provokeReaction(h, ReactionType.CONFUSION);
-        describeReaction(h, ReactionType.CONFUSION);
+        Provokable.provokeReaction(h, ReactionType.CONFUSION);
+        Provokable.describeReaction(h, ReactionType.CONFUSION, toString(), true);
     }
 
     public void setDeathType(DeathType d) {
@@ -34,25 +34,6 @@ public abstract class Corpse implements Hideable, Provokable {
 
     public DeathType getDeathType() {
         return deathType;
-    }
-
-    @Override
-    public void provokeReaction(Reactionable r, ReactionType t) {
-        r.setReaction(t);
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t, String provoker) {
-        switch (t) {
-            case CONFUSION:
-                System.out.printf("%s приводит в недоумение: %s\n", provoker, r.toString());
-                break;
-        }
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t) {
-        describeReaction(r, t, toString());
     }
 
     @Override

@@ -4,42 +4,22 @@ import Lab3.Enums.*;
 import Lab3.Interfaces.*;
 
 public class HurricaneWind implements Provokable {
-    private static HurricaneWind instance;
-
-    private HurricaneWind() { }
+    Integer power = 0;
 
     public void startBlowing() {
         System.out.printf("%s начинает свои первые яростные порывы\n", toString());
     }
 
+    public void setPower(int power) {
+        if (0 <= power && power <= 10)
+            this.power = power;
+        else
+            throw new RuntimeException("HurricaneWind's power should be integer from 1 to 10");
+    }
+
     public void frighten(Reactionable d) {
-        provokeReaction(d, ReactionType.FEAR);
-        describeReaction(d, ReactionType.FEAR);
-    }
-
-    @Override
-    public void provokeReaction(Reactionable r, ReactionType t) {
-        r.setReaction(t);
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t, String provoker) {
-        switch (t) {
-            case FEAR:
-                System.out.printf("%s испугал: %s\n", provoker, r.toString());
-                break;
-        }
-    }
-
-    @Override
-    public void describeReaction(Reactionable r, ReactionType t) {
-        describeReaction(r, t, toString());
-    }
-
-    public static HurricaneWind getInstance() {
-        if (instance == null)
-            instance = new HurricaneWind();
-        return instance;
+        Provokable.provokeReaction(d, ReactionType.FEAR);
+        Provokable.describeReaction(d, ReactionType.FEAR, toString(), true);
     }
 
     @Override
@@ -49,11 +29,13 @@ public class HurricaneWind implements Provokable {
 
     @Override
     public int hashCode() {
-        return 0;
+        return power.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return getClass() == obj.getClass();
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        return power.equals(((HurricaneWind) obj).power);
     }
 }

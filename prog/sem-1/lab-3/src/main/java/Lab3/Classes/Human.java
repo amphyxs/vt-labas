@@ -3,8 +3,9 @@ package Lab3.Classes;
 import java.util.LinkedHashSet;
 import Lab3.AbstractClasses.*;
 import Lab3.Enums.*;
+import Lab3.Interfaces.*;
 
-public class Human extends AliveCreature {
+public class Human extends AliveCreature implements Provokable {
     public Human() {
         super();
     }
@@ -13,13 +14,13 @@ public class Human extends AliveCreature {
         super(name);
     }
 
-    public void leaveAlone(AliveCreature d) {
-        System.out.printf("%s оставили в одиночестве: %s\n", toString(), d.toString());
+    public void leaveAlone(Dog d) {
+        Provokable.provokeReaction(d, ReactionType.LONELINESS);
+        Provokable.describeReaction(d, ReactionType.LONELINESS, toString(), true);
     }
 
     @Override
     public HumanCorpse die(DeathType d) {
-        // TODO
         return new HumanCorpse(d, this);
     }
 
