@@ -5,7 +5,6 @@ import yaml
 import timeit
 import schedule_pb2
 
-
 def main_task():
     """Конвертировать schedule.json в schedule.yml"""
     data = parse_json_file('schedule.json')
