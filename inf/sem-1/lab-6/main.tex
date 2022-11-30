@@ -1,0 +1,66 @@
+\documentclass{book}
+\usepackage[english, russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{blindtext}
+\usepackage{multicol}
+\usepackage{tabularray}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{wrapfig}
+\usepackage{listings}
+\geometry{  % configure padding and layout
+  a4paper,
+  left=36mm,
+  top=40mm,
+  headheight=5.0mm
+}
+
+\graphicspath{ {./images/} }
+
+\captionsetup{ % configure captions to the tables and pictures
+  aboveskip=0.0mm,
+  belowskip=0.0mm,
+  font=footnotesize,
+  justification=raggedleft,
+  labelfont=it,
+  singlelinecheck=off
+}
+\addtocounter{table}{1}  % we start from the 2nd table
+\definecolor{tableColor}{HTML}{bec5e0}  % table color
+% \definecolor{additionalColor}{HTML}{d12417}
+% \definecolor{whiteColor}{HTML}{ffffff}
+\pagestyle{fancy} % header styling
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0.0mm}
+\setlength{\headheight}{-1.0mm}
+\renewcommand{\headruleskip}{0.0mm}
+\setlength{\columnsep}{9.0mm} % 2 cols text styling
+
+\title{}
+\author{}
+\date{}
+
+\pdfinfo{
+ /Title    ()
+ /Author   ()
+ /Creator  ()
+ /Producer ()
+ /Subject  ()
+ /Keywords ()
+}
+
+\begin{document}
+%\input{title}
+
+%\newpage
+
+\input{article-fragment}
+
+\newpage
+
+\end{document}

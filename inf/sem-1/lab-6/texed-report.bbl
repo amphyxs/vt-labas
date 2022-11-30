@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{texbook1}
+Воронцов~К. В.
+\newblock {\em {\LaTeX$2\varepsilon$} в примерах}.
+\newblock 2005.
+
+\bibitem{texbook2}
+Львовский~С. М.
+\newblock {\em Набор и вёрстка в системе {\LaTeX}}.
+\newblock М.: МЦНМО, 2005.
+
+\end{thebibliography}
