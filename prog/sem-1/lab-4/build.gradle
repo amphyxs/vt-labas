@@ -24,7 +24,7 @@ tasks.register('makeJar', Jar) {
 
     manifest {
         attributes(
-                'Main-Class': 'Lab3.Main'
+                'Main-Class': 'Lab4.Main'
         )
     }
 }

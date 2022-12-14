@@ -1,7 +1,5 @@
-package src;
-
 import ru.ifmo.se.pokemon.*;
-import src.pokemons.*;
+import pokemons.*;
 
 public class Main {
     public static void main(String[] args) {

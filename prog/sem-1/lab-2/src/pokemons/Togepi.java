@@ -1,7 +1,7 @@
-package src.pokemons;
+package pokemons;
 
 import ru.ifmo.se.pokemon.*;
-import src.moves.*;
+import moves.*;
 
 public class Togepi extends Pokemon {
     public Togepi(String name, int level) {
