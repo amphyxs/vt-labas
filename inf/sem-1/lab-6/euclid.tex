@@ -1,0 +1,96 @@
+\documentclass[10pt]{article}
+\usepackage[english, russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage{amssymb}
+
+\geometry{  % configure padding and layout
+  a4paper,
+  left=15mm,
+  top=25mm,
+  headheight=5.0mm
+}
+
+\graphicspath{ {./images/} }
+
+\pagestyle{fancy} % header styling
+\fancyhead{}
+\fancyfoot{}
+
+\renewcommand{\headrulewidth}{0.0mm}
+\setlength{\headheight}{1.0mm}
+\renewcommand{\headruleskip}{10.0mm}
+
+\definecolor{blue}{HTML}{265691}
+\definecolor{red}{HTML}{CE4B1C}
+\definecolor{yellow}{HTML}{E5AA1B}
+
+\addtocounter{page}{48}
+
+\begin{document}
+\fancyhead{} % clear all header fields
+\fancyhead[L]{\hspace{15mm}КНИГА I ПРЕДЛ. XXV. ТЕОРЕМА\quad\quad\thepage}
+\begin{multicols}{2}
+\begin{wrapfigure}{L}{0.1\textwidth}
+\centering
+\includegraphics[width=0.1\textwidth]{letter_E}
+\end{wrapfigure}
+\noindent\textit{сли у двух треугольников две стороны \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\draw[color=blue,line width=2.5pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeB) {\tiny B};\end{tikzpicture} и \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeC) {\tiny C};\draw[color=red,line width=2.5pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeA) {\tiny A};\end{tikzpicture} соответственно равны двум сторонам \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeD) {\tiny D};\draw[color=blue,line width=1pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeE) {\tiny E};\end{tikzpicture} и \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeF) {\tiny F};\draw[color=red,line width=1pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeD) {\tiny D};\end{tikzpicture} другого, но основания неравны, то угол над большим основанием \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeB) {\tiny B};\draw[color=black,line width=2.5pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeC) {\tiny C};\end{tikzpicture} одного треугольника меньше угла под меньшим \begin{tikzpicture}\node [fill=none] at (0.01,0.15) (nodeE) {\tiny E};\draw[color=yellow,line width=1pt](0,0) -- (1,0);\node [fill=none] at (1.01,0.15) (nodeF) {\tiny F};\end{tikzpicture} другого.}
+
+\vspace{5mm}
+\centering
+\begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} $=\;,\;>$ или $<$ \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture}
+\\
+\begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} не равен \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture},
+\\
+поскольку если \begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} = \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture}, то
+\\
+\begin{tikzpicture}\node [fill=none] at (1.01,0.15) (nodeB) {\tiny B};\draw[color=black,line width=2.5pt](0,0) -- (1,0);\node [fill=none] at (0.01,0.15) (nodeC) {\tiny C};\end{tikzpicture} = \begin{tikzpicture}\node [fill=none] at (1.01,0.15) (nodeE) {\tiny E};\draw[color=yellow,line width=1pt](0,0) -- (1,0);\node [fill=none] at (0.01,0.15) (nodeF) {\tiny F};\end{tikzpicture} (пр. I.4),
+\\
+что противоречит гипотезе;
+\\
+\begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} не меньше \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture},
+\\
+поскольку если \begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} < \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture}, то
+\\
+\begin{tikzpicture}\node [fill=none] at (1.01,0.15) (nodeB) {\tiny B};\draw[color=black,line width=2.5pt](0,0) -- (1,0);\node [fill=none] at (0.01,0.15) (nodeC) {\tiny C};\end{tikzpicture} < \begin{tikzpicture}\node [fill=none] at (1.01,0.15) (nodeE) {\tiny E};\draw[color=yellow,line width=1pt](0,0) -- (1,0);\node [fill=none] at (0.01,0.15) (nodeF) {\tiny F};\end{tikzpicture}(пр. I.24),
+\\
+что противоречит гипотезе.
+\\
+$\therefore$ \begin{tikzpicture}[baseline=-2ex]\node [fill=none] at (-0.3,-0.6) (nodeC) {\tiny C};\node [fill=none] at (0.01,0.15) (nodeA) {\tiny A};\node [fill=none] at (.3,-0.6) (nodeB) {\tiny B};\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;\end{tikzpicture} > \begin{tikzpicture}[baseline=-2ex]\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;\node [fill=none] at (0,0.2) (nodeD) {\tiny D};\node [fill=none] at (0.2,-0.7) (nodeE) {\tiny E};\node [fill=none] at (-0.3,-0.6) (nodeF) {\tiny F};\end{tikzpicture}.
+\\
+\raggedleft
+ч.т.д.
+
+\columnbreak
+
+\centering
+\begin{tikzpicture}
+\draw[color=yellow,fill=yellow] (0,0) -- (250:0.5) arc(250:290:0.5) -- cycle;
+\draw[red, line width=2.5pt] (-2,-5) -- (0,0);
+\draw[blue, line width=2.5pt] (0,0) -- (2,-4);
+\draw[black, line width=2.5pt] (-2,-5) -- (2,-4);
+\node [fill=none] at (0,0.2) (nodeA) {\tiny A};
+\node [fill=none] at (2.1,-4.2) (nodeB) {\tiny B};
+\node [fill=none] at (-2.2,-5.2) (nodeC) {\tiny C};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\draw[color=black,fill=black] (0,0) -- (250:0.5) arc(250:281:0.5) -- cycle;
+\draw[red, line width=1pt] (-2,-5) -- (0,0);
+\draw[blue, line width=1pt] (0,0) -- (1,-4);
+\draw[yellow, line width=1pt] (-2,-5) -- (1,-4);
+\node [fill=none] at (0,0.2) (nodeD) {\tiny D};
+\node [fill=none] at (1.3,-4.1) (nodeE) {\tiny E};
+\node [fill=none] at (-2.2,-5.2) (nodeF) {\tiny F};
+\end{tikzpicture}
+
+\end{multicols}
+\end{document}

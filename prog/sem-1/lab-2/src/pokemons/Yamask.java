@@ -1,7 +1,7 @@
-package src.pokemons;
+package pokemons;
 
 import ru.ifmo.se.pokemon.*;
-import src.moves.*;
+import moves.*;
 
 public class Yamask extends Pokemon {
     public Yamask(String name, int level) {

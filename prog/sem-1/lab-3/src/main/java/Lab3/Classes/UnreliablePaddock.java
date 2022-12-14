@@ -21,7 +21,6 @@ public class UnreliablePaddock {
 
     public boolean deleteDog(Dog dogToDel) {
         // TODO: применить паттерн "Двойной диспетчерезации (паттерн посетитель)"
-        // If the dog found - deletes it, describes the story and returns true, otherwise - returns false
         if (dogs.remove(dogToDel)) {
             System.out.printf("%s разрушен и из него вырвались: %s\n", toString(), dogToDel.toString());
             return true;
