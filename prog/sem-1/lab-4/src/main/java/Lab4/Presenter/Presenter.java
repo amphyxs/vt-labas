@@ -1,24 +1,41 @@
 package Lab4.Presenter;
 
+import Lab4.Main;
 import Lab4.Model.IModel;
 import Lab4.Model.Sentences.Presentable;
 import Lab4.View.IView;
 
+import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Presenter implements IPresenter {
     private IModel model;
     private IView view;
 
-    public Presenter() {}
-
-    public void setModel(IModel model) {
+    @Inject
+    public Presenter(IModel model, IView view) {
         this.model = model;
+        this.view = view;
     }
 
+    @Override
+    public IView getView() {
+        return view;
+    }
+
+    @Override
     public void setView(IView view) {
         this.view = view;
+    }
+
+    @Override
+    public IModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(IModel model) {
+        this.model = model;
     }
 
     @Override

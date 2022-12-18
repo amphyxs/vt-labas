@@ -13,8 +13,8 @@ public class Human extends AliveCreature implements Provokable {
     }
 
     public class HumanCorpse extends Corpse {
-        public HumanCorpse(DeathType d, Human human) {
-            super(d, human);
+        public HumanCorpse(DeathType d) {
+            super(d, Human.this);
         }
 
         @Override
@@ -44,6 +44,6 @@ public class Human extends AliveCreature implements Provokable {
 
     @Override
     public HumanCorpse die(DeathType d) {
-        return new HumanCorpse(d, this);
+        return new HumanCorpse(d);
     }
 }

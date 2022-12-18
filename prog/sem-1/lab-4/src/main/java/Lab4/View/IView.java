@@ -1,13 +1,13 @@
 package Lab4.View;
 
-import java.awt.event.ActionEvent;
-
 public interface IView {
     void showData(String type, String place, String character, String description, String[] targets);
 
     String getAppName();
 
+    void bindEventHandler(IViewEvent event, EventHandler handler);
+
     void notifyAboutDataEnd();
 
-    void start();
+    void show();
 }

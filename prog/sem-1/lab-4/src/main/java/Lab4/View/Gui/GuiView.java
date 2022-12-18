@@ -1,39 +1,48 @@
 package Lab4.View.Gui;
 
-import Lab4.Presenter.IPresenter;
+import Lab4.View.EventHandler;
 import Lab4.View.IView;
+import Lab4.View.IViewEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuiView implements IView {
     private final String APP_NAME = "Lab4";
     private static IView instance;
     private StartWindow startWindow;
     private MainWindow mainWindow;
-    private IPresenter presenter;
+    private Map<IViewEvent, EventHandler> eventBindings;
 
-    private GuiView(IPresenter presenter) {
-        this.presenter = presenter;
+    public GuiView() {
+        this.eventBindings = new HashMap<IViewEvent, EventHandler>();
     }
 
-    public static IView getInstance(IPresenter presenter) {
-        if (instance == null)
-            instance = new GuiView(presenter);
-        return instance;
-    }
-
-    @Override
-    public void start() {
-        this.startWindow = new StartWindow(this);
-        startWindow.showWindow();
+    private void launchExternalHandler(GuiViewEvent ev) {
+        if (this.eventBindings.containsKey(ev))
+            this.eventBindings.get(ev).handleEvent();
     }
 
     void onStartBtnClick() {
+        launchExternalHandler(GuiViewEvent.START_BTN_CLICK);
         this.startWindow.closeWindow();
         this.mainWindow = new MainWindow(this);
         this.mainWindow.showWindow();
     }
 
     void onNextBtnClick() {
-        presenter.showNextData();
+        this.eventBindings.get(GuiViewEvent.NEXT_BTN_CLICK).handleEvent();
+    }
+
+    @Override
+    public void bindEventHandler(IViewEvent event, EventHandler handler) {
+        this.eventBindings.put(event, handler);
+    }
+
+    @Override
+    public void show() {
+        this.startWindow = new StartWindow(this);
+        startWindow.showWindow();
     }
 
     @Override
@@ -50,5 +59,4 @@ public class GuiView implements IView {
     public void notifyAboutDataEnd() {
         mainWindow.onDataEnd();
     }
-
 }

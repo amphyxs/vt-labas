@@ -9,6 +9,10 @@ repositories {
 }
 
 dependencies {
+    implementation files('lib/guice-5.1.0.jar')
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'aopalliance:aopalliance:1.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }

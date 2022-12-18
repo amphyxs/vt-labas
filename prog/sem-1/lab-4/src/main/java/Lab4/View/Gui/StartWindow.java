@@ -2,12 +2,15 @@ package Lab4.View.Gui;
 
 import Lab4.View.IView;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class StartWindow extends JFrame implements IWindow {
     private GuiView view;
@@ -47,7 +50,9 @@ public class StartWindow extends JFrame implements IWindow {
         add(startBtn);
         add(Box.createVerticalGlue());
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
+        setIconImage(new ImageIcon("src/main/resources/app-icon.png").getImage());
         setSize(800, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

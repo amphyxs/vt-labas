@@ -2,12 +2,15 @@ package Lab4.View.Gui;
 
 import Lab4.View.IView;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +18,7 @@ public class MainWindow extends JFrame implements IWindow {
     private final GuiView view;
     private DefaultTableModel tableModel;
     private JButton nextBtn;
+    private final static int windowWidth = 1200, windowHeight = 600;
 
     public MainWindow(GuiView v) {
         super(v.getAppName());
@@ -53,6 +57,11 @@ public class MainWindow extends JFrame implements IWindow {
         };
         this.tableModel = new DefaultTableModel(columnNames, 0);
         JTable storyTable = new JTable(this.tableModel);
+        storyTable.getColumnModel().getColumn(0).setPreferredWidth((int) Math.floor(windowWidth*0.05));
+        storyTable.getColumnModel().getColumn(1).setPreferredWidth((int) Math.floor(windowWidth*0.1));
+        storyTable.getColumnModel().getColumn(2).setPreferredWidth((int) Math.floor(windowWidth*0.15));
+        storyTable.getColumnModel().getColumn(3).setPreferredWidth((int) Math.floor(windowWidth*0.5));
+        storyTable.getColumnModel().getColumn(4).setPreferredWidth((int) Math.floor(windowWidth*0.2));
         storyTable.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.nextBtn = new JButton("Далее");
         nextBtn.addActionListener(new ActionListener() {
@@ -68,7 +77,9 @@ public class MainWindow extends JFrame implements IWindow {
         add(nextBtn);
         add(Box.createVerticalStrut(10));
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
-        setSize(800, 400);
+        setIconImage(new ImageIcon("src/main/resources/app-icon.png").getImage());
+        setSize(windowWidth, windowHeight);
+        setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
