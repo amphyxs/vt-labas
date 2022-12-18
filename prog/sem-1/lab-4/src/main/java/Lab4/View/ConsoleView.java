@@ -1,29 +1,22 @@
 package Lab4.View;
 
-import Lab4.Presenter.IPresenter;
-import Lab4.View.Gui.GuiView;
-
 public class ConsoleView implements IView {
-    private static IView instance;
-
     private boolean isDataEnd = false;
 
-    private IPresenter presenter;
+    private EventHandler nextDataHandler;
 
-    private ConsoleView(IPresenter presenter) {
-        this.presenter = presenter;
-    }
-
-    public static IView getInstance(IPresenter presenter) {
-        if (instance == null)
-            instance = new ConsoleView(presenter);
-        return instance;
+    @Override
+    public void bindEventHandler(IViewEvent event, EventHandler handler) {
+        if (event == ConsoleViewEvent.NEXT_DATA_REQUIRED)
+            nextDataHandler = handler;
+        else
+            System.out.printf("Unknown event: %s\n", event.getClass().getSimpleName());
     }
 
     @Override
-    public void start() {
+    public void show() {
         while (!isDataEnd)
-            presenter.showNextData();
+            nextDataHandler.handleEvent();
     }
 
     @Override

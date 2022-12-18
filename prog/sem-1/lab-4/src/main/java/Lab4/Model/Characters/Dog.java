@@ -12,8 +12,8 @@ public class Dog extends AliveCreature implements Prisonable {
     }
 
     public class DogCorpse extends Corpse {
-        public DogCorpse(DeathType deathType, Dog body) {
-            super(deathType, body);
+        public DogCorpse(DeathType deathType) {
+            super(deathType, Dog.this);
         }
 
         @Override
@@ -26,7 +26,7 @@ public class Dog extends AliveCreature implements Prisonable {
 
     @Override
     public DogCorpse die(DeathType d) {
-        return new DogCorpse(d, this);
+        return new DogCorpse(d);
     }
 
     @Override

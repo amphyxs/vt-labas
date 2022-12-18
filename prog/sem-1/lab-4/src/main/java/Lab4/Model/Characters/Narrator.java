@@ -19,7 +19,7 @@ public class Narrator extends Human {
         this.repr = "рассказчик";
     }
 
-    class Friend extends Human {
+    static class Friend extends Human {
         {
             this.repr = "товарищ рассказчика";
         }
