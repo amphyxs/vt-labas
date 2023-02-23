@@ -17,6 +17,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Main {
 
     static class GuiStoryModule extends AbstractModule {
@@ -43,11 +46,11 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws NoSuchMethodException {
-        Injector injector = Guice.createInjector(new ConsoleStoryModule());
+    public static void main(String[] args) throws NoSuchMethodException, MalformedURLException {
+        Injector injector = Guice.createInjector(new GuiStoryModule());
         IPresenter presenter = injector.getInstance(Presenter.class);
         presenter.getView().bindEventHandler(
-                ConsoleViewEvent.NEXT_DATA_REQUIRED,
+                GuiViewEvent.NEXT_BTN_CLICK,
                 new EventHandler(presenter, presenter.getClass().getDeclaredMethod("showNextData"))
         );
         presenter.getView().show();
