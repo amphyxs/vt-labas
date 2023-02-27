@@ -6,7 +6,6 @@ import Lab4.Model.StoryModel;
 import Lab4.Presenter.IPresenter;
 import Lab4.Presenter.Presenter;
 import Lab4.View.ConsoleView;
-import Lab4.View.ConsoleViewEvent;
 import Lab4.View.EventHandler;
 import Lab4.View.Gui.GuiView;
 import Lab4.View.Gui.GuiViewEvent;
@@ -18,7 +17,6 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 public class Main {
 
