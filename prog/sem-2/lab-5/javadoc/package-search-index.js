@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"org.lab5"},{"l":"org.lab5.Model"},{"l":"org.lab5.Model.DataClasses"},{"l":"org.lab5.Model.Exceptions"},{"l":"org.lab5.Presenter"},{"l":"org.lab5.Presenter.Commands"},{"l":"org.lab5.Presenter.Exceptions"},{"l":"org.lab5.View"}]

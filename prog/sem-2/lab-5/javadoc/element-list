@@ -1,0 +1,8 @@
+org.lab5
+org.lab5.Model
+org.lab5.Model.DataClasses
+org.lab5.Model.Exceptions
+org.lab5.Presenter
+org.lab5.Presenter.Commands
+org.lab5.Presenter.Exceptions
+org.lab5.View
