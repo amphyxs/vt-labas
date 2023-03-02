@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
@@ -158,7 +159,7 @@ public class JsonModel implements IModel {
     private String getFilePath() {
         String result = System.getenv(this.ENV_VAR);
         if (result == null)
-            result = System.getProperty("user.dir");
+            result =  Paths.get(System.getProperty("user.dir"), "spacemarines-data.json").toAbsolutePath().toString();
 
         return result;
     }

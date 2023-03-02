@@ -21,6 +21,8 @@ public class UpdateCommand implements ICommand {
             if (element.getId() == this.id) {
                 try {
                     SpaceMarine replaceMarine = AddCommand.readSpaceMarine(this.id, presenter.getView());
+                    if (replaceMarine == null)
+                        return;
                     element.setName(replaceMarine.getName());
                     element.setCoordinates(replaceMarine.getCoordinates());
                     element.setHealth(replaceMarine.getHealth());

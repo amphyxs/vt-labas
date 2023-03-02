@@ -126,7 +126,8 @@ public class CommandsPresenter implements IPresenter {
     
     @Override
     public void stop() {
-        this.views.pop();
+        if (!this.views.isEmpty())
+            this.views.pop();
     }
 
     @Override

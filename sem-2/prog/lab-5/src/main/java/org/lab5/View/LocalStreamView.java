@@ -147,7 +147,7 @@ public class LocalStreamView implements IView {
                 showError(String.format("Неверный формат ввода (требуемый тип: %s)", fieldClass.getSimpleName()));
             } catch (NoSuchElementException e) {  // EOF case
                 this.presenter.stop();
-                return null;
+                throw new InputEndedException();
             }
         }
 
@@ -178,7 +178,7 @@ public class LocalStreamView implements IView {
                     
             } catch (NoSuchElementException e) {  // EOF case
                 this.presenter.stop();
-                return null;
+                throw new InputEndedException();
             }
 
             if (constantName.isBlank()) {
