@@ -1,44 +1,43 @@
 package org.lab5.Presenter.Commands;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.io.BufferedReader;
+import java.util.Stack;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
 
+import org.lab5.View.IView;
+import org.lab5.Presenter.CommandsPresenter;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
+import org.lab5.View.LocalStreamView;
 
 
 public class ExecuteScriptCommand implements ICommand {
 
     private String filename;
+    private static Stack<String> executedScripts = new Stack<String>();
 
     @Override
     public void execute(IPresenter presenter) {
-        // TODO: JSON arguments (e.g. add command)
+        if (ExecuteScriptCommand.executedScripts.contains(getScriptPath())) {
+            presenter.getView().showError("Обнаружена рекурсия. Исполнение данного скрипта будет пропущено");
+            return;
+        }    
+        
+        IView scriptView;
         try {
-            for (ICommand command : readCommandsScript(presenter)) {
-                StringBuilder commandArgs = new StringBuilder();
-                if (command.getArgsNames() != null && command.getArgsNames().length != 0) {
-                    for (String argName : command.getArgsNames()) {
-                        commandArgs.append(" " + command.getArg(argName).toString());
-                    }
-                }
-
-                presenter.getView().showInfo(String.format("Исполнение команды \"%s%s\"", command.getName(), commandArgs));
-                try {
-                    command.execute(presenter);
-                } catch (StackOverflowError e) {
-                    presenter.getView().showError("ВЫ ХОТЕЛИ УБИТЬ ПРОГРАММУ, НО НЕ ВЫШЛО. Остановка скрипта");
-                    return;
-                }
-            }
-        } catch (ScriptExecutionFailedException | CommandArgNotFound e) {
-            presenter.getView().showError(e.getMessage());
+            scriptView = new LocalStreamView(new FileInputStream(new File(this.filename)), presenter, true);
+        } catch (FileNotFoundException e) {
+            presenter.getView().showError(String.format("Не удалось получить доступ к скрипту \"%s\" (не найден или недостаточно прав)", this.filename));
+            return;
         }
+
+        ExecuteScriptCommand.executedScripts.add(getScriptPath());
+        
+        presenter.addView(scriptView);
+        presenter.start();
+
+        executedScripts.pop();
     }
 
     @Override
@@ -65,32 +64,6 @@ public class ExecuteScriptCommand implements ICommand {
         }
     }
 
-    private ICommand[] readCommandsScript(IPresenter presenter) throws ScriptExecutionFailedException {
-        List<ICommand> result = new ArrayList<ICommand>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(this.filename))) {
-            List<String[]> scriptCommandsWithArgs = reader.lines().map(c -> c.strip().split(" ")).collect(Collectors.toList());
-            for (String[] scriptCommand : scriptCommandsWithArgs) {
-                String fullCommand = String.join(" ", scriptCommand);
-                try {
-                    result.add(presenter.getCommandByName(scriptCommand));
-                } catch (CommandNotFoundException e) {
-                    throw new ScriptExecutionFailedException(String.format("При считывании скрипта обнаружена неизвестная команда \"%s\"", fullCommand));
-                } catch (BadCommandArgException e) {
-                    throw new ScriptExecutionFailedException(String.format("В скрипте команде \"%s\" передан неверный аргумент (%s)", fullCommand, e.getMessage()));
-                } catch (BadCommandArgsNumberException e) {
-                    throw new ScriptExecutionFailedException(String.format("В скрипте команде \"%s\" передано неверное число аргументов (%s)", fullCommand, e.getMessage()));
-                }
-            }
-        } catch (FileNotFoundException e) {
-            throw new ScriptExecutionFailedException(String.format("Невозможно получить доступ к файлу \"%s\" (не найден или недостаточно прав)", this.filename));
-        } catch (IOException e) {
-            throw new ScriptExecutionFailedException(String.format("Не удалось считать скрипт", this.filename));
-        }
-
-        return result.toArray(new ICommand[result.size()]);
-    }
-
     @Override
     public Object getArg(String argName) throws CommandArgNotFound {
         switch (argName) {
@@ -99,6 +72,10 @@ public class ExecuteScriptCommand implements ICommand {
             default:
                 throw new CommandArgNotFound(getName(), argName);
         }
+    }
+
+    private String getScriptPath() {
+        return (new File(this.filename)).getAbsolutePath();
     }
 
 }

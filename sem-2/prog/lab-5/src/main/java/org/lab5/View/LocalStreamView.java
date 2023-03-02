@@ -3,23 +3,103 @@ package org.lab5.View;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.io.InputStream;
+
+import org.lab5.Presenter.IPresenter;
+import org.lab5.Presenter.Commands.ICommand;
+import org.lab5.Presenter.Exceptions.BadCommandArgException;
+import org.lab5.Presenter.Exceptions.BadCommandArgsNumberException;
+import org.lab5.Presenter.Exceptions.CommandNotFoundException;
+import org.lab5.Presenter.Exceptions.InputEndedException;
+import org.lab5.Presenter.Exceptions.NullCommandException;
 
 /**
  * Отображение в виде вывода и чтения текста из консоли
  */
-public class ConsoleView implements IView {
+public class LocalStreamView implements IView {
 
     private static final int DASHES = 20;
-    private Scanner sc;
 
-    public ConsoleView() {
-        this.sc = new Scanner(System.in);
+    private Scanner sc;
+    private InputStream inputStream;
+    private IPresenter presenter;
+    private boolean isScriptMode;
+
+    public LocalStreamView(InputStream inputStream, IPresenter presenter, boolean isScriptMode) {
+        this.inputStream = inputStream;
+        this.sc = new Scanner(inputStream);
+        this.presenter = presenter;
+        this.isScriptMode = isScriptMode;
+    }
+
+    public LocalStreamView(InputStream inputStream, boolean isScriptMode) {
+        this(inputStream, null, isScriptMode);
+    }
+
+    public LocalStreamView(IPresenter presenter, boolean isScriptMode) {
+        this(System.in, presenter, isScriptMode);
+    }
+
+    public LocalStreamView(boolean isScriptMode) {
+        this(System.in, null, isScriptMode);
+    }
+    
+    public LocalStreamView() {
+        this(System.in, null, false);
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+        this.sc.close();
+        this.sc = new Scanner(inputStream);
     }
 
     @Override
-    public <T> T readSimpleField(String fieldName, Method checker, Class<T> fieldClass, int firstLastField) {
+    public IPresenter getPresenter() {
+        return this.presenter;
+    }
+
+    @Override
+    public void setPresenter(IPresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public boolean getIsScriptMode() {
+        return isScriptMode;
+    }
+
+    @Override
+    public ICommand readCommand() throws CommandNotFoundException, BadCommandArgException,
+            BadCommandArgsNumberException, NullCommandException, InputEndedException {
+        if (!this.isScriptMode)
+            System.out.print("Введите команду: ");
+            
+        String commandString;
+        try {
+            commandString = this.sc.nextLine().trim();
+            
+            if (commandString.isBlank()) {
+                throw new NullCommandException();
+            }
+        } catch (NoSuchElementException e) {  // EOF case
+            this.presenter.stop();
+            return null;
+        }
+
+        String[] commandWithArgs = commandString.split(" ");
+        return presenter.getCommandByName(commandWithArgs);
+    }
+
+    @Override
+    public <T> T readSimpleField(String fieldName, Method checker, Class<T> fieldClass, int firstLastField) throws InputEndedException {
         // FIXME: make form or refactor this firstLastField
         if (firstLastField == -1)
             printDashes();
@@ -27,9 +107,12 @@ public class ConsoleView implements IView {
         T value;
         while (true) {
             System.out.printf("Введите %s: ", fieldName);
-
+            
             try {
-                String strValue = this.sc.nextLine();
+                String strValue = null;
+                strValue = this.sc.nextLine().trim();
+                if (this.isScriptMode)
+                    System.out.println(strValue);
                 
                 if (strValue.isBlank()) {
                     value = null;
@@ -51,7 +134,7 @@ public class ConsoleView implements IView {
                     else if (String.class == fieldClass)
                         value = fieldClass.cast(strValue);
                     else
-                        throw new IllegalArgumentException(String.format("Передан тип (%s), неподдерживаемый для чтения с помощью ConsoleView", fieldClass.getName()));
+                        throw new IllegalArgumentException(String.format("Передан тип (%s), неподдерживаемый для чтения с помощью LocalStreamView", fieldClass.getName()));
                 }
                 
                 if (checker != null)
@@ -62,6 +145,9 @@ public class ConsoleView implements IView {
                 showError(e.getCause().getMessage());
             } catch (NumberFormatException e) {
                 showError(String.format("Неверный формат ввода (требуемый тип: %s)", fieldClass.getSimpleName()));
+            } catch (NoSuchElementException e) {  // EOF case
+                this.presenter.stop();
+                return null;
             }
         }
 
@@ -72,7 +158,7 @@ public class ConsoleView implements IView {
     }
 
     @Override
-    public <T extends Enum<T>> T readEnumConstant(String fieldName, Method checker, Class<T> enumClass, int firstLastField) {
+    public <T extends Enum<T>> T readEnumConstant(String fieldName, Method checker, Class<T> enumClass, int firstLastField) throws InputEndedException {
         if (firstLastField == -1)
             printDashes();
 
@@ -83,7 +169,17 @@ public class ConsoleView implements IView {
         String allConstants = Arrays.stream(enumClass.getEnumConstants()).map(Object::toString).collect(Collectors.joining(", "));
         while (true) {
             System.out.printf("Введите %s (%s): ", fieldName, allConstants);
-            String constantName = this.sc.nextLine();
+
+            String constantName;
+            try {
+                constantName = this.sc.nextLine().trim();
+                if (this.isScriptMode)
+                    System.out.println(constantName);
+                    
+            } catch (NoSuchElementException e) {  // EOF case
+                this.presenter.stop();
+                return null;
+            }
 
             if (constantName.isBlank()) {
                 constant = null;
@@ -143,5 +239,5 @@ public class ConsoleView implements IView {
             System.out.print("-");
         System.out.println();
     }
-    
+
 }

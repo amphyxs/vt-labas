@@ -32,11 +32,15 @@ public interface IPresenter {
      */
     IView getView();
 
+    void addView(IView view);
+
     /**
      * 
      * @return Модель данных
      */
     IModel getModel();
+
+    void setMode(IModel model);
 
     /**
      * 

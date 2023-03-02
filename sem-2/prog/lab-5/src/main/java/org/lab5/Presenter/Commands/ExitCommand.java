@@ -7,6 +7,9 @@ public class ExitCommand implements ICommand {
     
     @Override
     public void execute(IPresenter presenter) {
+        while (presenter.getView().getIsScriptMode())
+            presenter.stop();
+            
         presenter.stop();
     }
 
