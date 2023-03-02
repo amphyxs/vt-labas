@@ -6,6 +6,9 @@ import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
 
+/**
+ * Команда сохранения коллекции
+ */
 public class SaveCommand implements ICommand {
     
     @Override

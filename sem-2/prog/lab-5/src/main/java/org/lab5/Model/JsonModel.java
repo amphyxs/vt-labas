@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
@@ -32,14 +31,17 @@ import org.lab5.Presenter.IPresenter;
 public class JsonModel implements IModel {
 
     final private String ENV_VAR = "LAB5_DATA_PATH";
-    final private String FILENAME = "spacemarines-data.json";
-
+    
     private IPresenter presenter;
     
     public JsonModel() {
         this.presenter = null;
     }
     
+    /**
+     * 
+     * @param presenter Предсавление, которое необходимо присоединить к модели
+     */
     public JsonModel(IPresenter presenter) {
         this.presenter = presenter;
     }
@@ -77,8 +79,10 @@ public class JsonModel implements IModel {
     @Override
     public String saveData(SpaceMarine[] data) throws SaveFailedException {
         JSONArray array = new JSONArray();
-        for (SpaceMarine element : data)
+        if (data != null) {
+            for (SpaceMarine element : data)
             array.put(convertToJson(element));
+        }
         
         String jsonData = array.toString();
         writeJson(jsonData);
@@ -132,6 +136,7 @@ public class JsonModel implements IModel {
             String jsonData = reader.lines().reduce((a, b) -> a.strip() + b.strip()).get();
             return jsonData;
         } catch (FileNotFoundException e) {
+            // TODO: использовать File для проверки прав и существования
             throw new LoadFailedException(String.format("Невозможно получить доступ к файлу \"%s\" (не найден или недостаточно прав)", getFilePath()));
         } catch (IOException e) {
             throw new LoadFailedException("Не удалось прочитать файл");
@@ -155,7 +160,7 @@ public class JsonModel implements IModel {
         if (result == null)
             result = System.getProperty("user.dir");
 
-        return Paths.get(result, FILENAME).toString();
+        return result;
     }
 
 }

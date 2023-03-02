@@ -4,6 +4,10 @@ import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 import org.lab5.Model.DataClasses.SpaceMarine;
 
+
+/**
+ * Команда удаления объекта коллекции по id
+ */
 public class RemoveByIdCommand implements ICommand {
     
     private int id;

@@ -3,6 +3,10 @@ package org.lab5.Presenter.Commands;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда удаления первого объекта коллекции
+ */
 public class RemoveFirstCommand implements ICommand {
 
     @Override

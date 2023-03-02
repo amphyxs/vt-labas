@@ -1,5 +1,7 @@
 package org.lab5.Presenter;
 
+import java.util.Stack;
+
 import org.lab5.Model.IModel;
 import org.lab5.Model.DataClasses.SpaceMarine;
 import org.lab5.Model.Exceptions.LoadFailedException;
@@ -7,17 +9,19 @@ import org.lab5.View.IView;
 import org.lab5.Presenter.Commands.*;
 import org.lab5.Presenter.Exceptions.BadCommandArgException;
 import org.lab5.Presenter.Exceptions.BadCommandArgsNumberException;
+import org.lab5.Presenter.Exceptions.CommandArgNotFound;
 import org.lab5.Presenter.Exceptions.CommandNotFoundException;
+import org.lab5.Presenter.Exceptions.InputEndedException;
+import org.lab5.Presenter.Exceptions.NullCommandException;
 
 /**
  * Представление, управляемое командами. Команды - средство обмена Отображения и Представления, аналогичное событиям
  */
 public class CommandsPresenter implements IPresenter {
     
-    private IView view;
+    private Stack<IView> views;
     private IModel model;
     private DataStack<SpaceMarine> collection;
-    private boolean exitStatus = false;
 
     /**
      * 
@@ -25,8 +29,11 @@ public class CommandsPresenter implements IPresenter {
      * @param model Модель данных
      */
     public CommandsPresenter(IView view, IModel model) {
-        this.view = view;
+        views = new Stack<IView>();
+        addView(view);
+        view.setPresenter(this);
         this.model = model;
+        model.setPresenter(this);
         initCollection();
     }
 
@@ -34,7 +41,7 @@ public class CommandsPresenter implements IPresenter {
         try {
             this.collection = new DataStack<SpaceMarine>(this.model.loadData());
         } catch (LoadFailedException e) {
-            this.view.showError(String.format("%s. Будет создана пустая коллекция", e.getMessage()));
+            getView().showError(String.format("%s. Будет создана пустая коллекция", e.getMessage()));
             this.collection = new DataStack<SpaceMarine>();
         }
     }
@@ -63,12 +70,22 @@ public class CommandsPresenter implements IPresenter {
 
     @Override
     public IView getView() {
-        return this.view;
+        return this.views.peek();
+    }
+
+    @Override
+    public void addView(IView view) {
+        this.views.push(view);
     }
 
     @Override
     public IModel getModel() {
         return this.model;
+    }
+
+    @Override
+    public void setModel(IModel model) {
+        this.model = model;
     }
 
     @Override
@@ -78,21 +95,38 @@ public class CommandsPresenter implements IPresenter {
 
     @Override
     public void start() {
-        while (this.exitStatus != true) {
+        if (this.views.isEmpty())
+            return;
+
+        IView currView = this.views.peek();
+        
+        while (!this.views.isEmpty() && currView == this.views.peek()) {
             ICommand currentCommand;
             try {
-                currentCommand = readCommand();
+                currentCommand = currView.readCommand();  
             } catch (CommandNotFoundException | BadCommandArgException | BadCommandArgsNumberException e) {
-                this.view.showError(e.getMessage());
+                currView.showError(e.getMessage());
                 continue;
+            } catch (NullCommandException e) {
+                continue;
+            } catch (InputEndedException e) {
+                stop();
+                break;
             }
-            currentCommand.execute(this);
+
+            if (currentCommand != null) {
+                if (currView.getIsScriptMode()) {
+                    currView.showInfo(String.format("Исполнение команды \"%s%s\"", currentCommand.getName(), getCommandArgs(currentCommand)));
+                }
+
+                currentCommand.execute(this);
+            }
         }
     }
-
+    
     @Override
     public void stop() {
-        this.exitStatus = true;
+        this.views.pop();
     }
 
     @Override
@@ -115,10 +149,18 @@ public class CommandsPresenter implements IPresenter {
         throw new CommandNotFoundException(commandName);
     }
 
-    private ICommand readCommand() throws CommandNotFoundException, BadCommandArgException, BadCommandArgsNumberException {
-        String commandString = this.view.readSimpleField("команду", null, String.class, 0);
-        String[] commandWithArgs = commandString.split(" ");
-        return getCommandByName(commandWithArgs);
+    private String getCommandArgs(ICommand command) {
+        StringBuilder commandArgs = new StringBuilder();
+        try {
+            if (command.getArgsNames() != null && command.getArgsNames().length != 0) {
+                for (String argName : command.getArgsNames()) {
+                    commandArgs.append(" " + command.getArg(argName).toString());
+                }
+            }
+        } catch (CommandArgNotFound e) {
+            getView().showError(e.getMessage());
+        }
+        return commandArgs.toString();
     }
     
 }

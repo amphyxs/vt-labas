@@ -55,7 +55,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
     }
 
     public static void checkName(String name) throws UserInputException {
-        if (name == null || name.isEmpty())
+        if (name == null || name.isBlank())
             throw new UserInputException("Имя не должно быть пустым");
     }
 

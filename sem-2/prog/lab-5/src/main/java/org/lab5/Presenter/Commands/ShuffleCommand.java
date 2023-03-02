@@ -5,6 +5,10 @@ import java.util.Collections;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда для перетасовки всех объектов коллекции
+ */
 public class ShuffleCommand implements ICommand {
     
     @Override

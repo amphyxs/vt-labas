@@ -6,6 +6,10 @@ import org.lab5.Model.DataClasses.SpaceMarine;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда удаления всех персонажей с заданным значением поля health
+ */
 public class RemoveAllByHealth implements ICommand {
     
     private Long health;

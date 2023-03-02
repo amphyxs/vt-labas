@@ -3,6 +3,10 @@ package org.lab5.Presenter.Commands;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда очистки коллекции
+ */
 public class ClearCommand implements ICommand {
     
     @Override

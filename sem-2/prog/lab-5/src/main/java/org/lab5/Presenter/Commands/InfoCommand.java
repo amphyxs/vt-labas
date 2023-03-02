@@ -7,6 +7,10 @@ import org.lab5.View.IView;
 
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * Команда вывода информации о коллекции
+ */
 public class InfoCommand implements ICommand {
 
     @Override

@@ -8,6 +8,10 @@ import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 import org.lab5.Model.DataClasses.Chapter;
 
+
+/**
+ * Команда вывода значений всех полей chapter объектов коллекции, отсортировав по убыванию
+ */
 public class PrintFieldDescendingChapterCommand implements ICommand {
     
     @Override

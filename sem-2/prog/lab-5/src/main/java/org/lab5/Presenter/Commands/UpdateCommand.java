@@ -6,6 +6,9 @@ import org.lab5.Presenter.Exceptions.*;
 import org.lab5.Model.Exceptions.*;
 
 
+/**
+ * Команда для обновления объекта коллекции с заданным полем id
+ */
 public class UpdateCommand implements ICommand {
 
     private int id;

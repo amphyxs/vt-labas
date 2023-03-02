@@ -33,10 +33,23 @@ public interface IPresenter {
     IView getView();
 
     /**
+     * Добавить отображение в стек исполнения отображений
+     *
+     * @param view Отображение для добавления
+     */
+    void addView(IView view);
+
+    /**
      * 
      * @return Модель данных
      */
     IModel getModel();
+
+    /**
+     *
+     * @param model Модель для присоединения
+     */
+    void setModel(IModel model);
 
     /**
      * 
@@ -45,12 +58,12 @@ public interface IPresenter {
     DataStack<SpaceMarine> getCollection();
 
     /**
-     * Начать работу
+     * Начать работу с текущим представлением
      */
     void start();
 
     /**
-     * Останов
+     * Остановить работу с текущим представлением
      */
     void stop();
 

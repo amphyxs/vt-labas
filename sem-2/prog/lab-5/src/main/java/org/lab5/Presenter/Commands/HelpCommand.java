@@ -8,6 +8,9 @@ import org.lab5.Presenter.Exceptions.*;
 import org.lab5.View.IView;
 
 
+/**
+ * Команда вывода информации обо всех командах
+ */
 public class HelpCommand implements ICommand {
 
     @Override

@@ -3,10 +3,17 @@ package org.lab5.Presenter.Commands;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда выхода из программы
+ */
 public class ExitCommand implements ICommand {
     
     @Override
     public void execute(IPresenter presenter) {
+        while (presenter.getView().getIsScriptMode())
+            presenter.stop();
+            
         presenter.stop();
     }
 

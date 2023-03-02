@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 
+
+/**
+ * Команда вывода объектов коллекции, отфильтрованных по полю name
+ */
 public class FilterStartsWithNameCommand implements ICommand { 
 
     private String name;
