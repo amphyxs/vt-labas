@@ -1,6 +1,6 @@
 package org.lab5.Model.DataClasses;
 
-import org.lab5.Model.Exceptions.UserInputException;
+import org.lab5.Model.Exceptions.ValidationFailedException;
 
 import org.lab5.Model.IModel;
 import org.lab5.Model.Exceptions.BadIdException;
@@ -32,12 +32,12 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
      * @param weaponType Тип огнестрельного оружия
      * @param meleeWeapon Тип холодного оружия
      * @param chapter Подразделение
-     * @throws UserInputException Если параметры не соответствуют огрничениям
+     * @throws ValidationFailedException Если параметры не соответствуют огрничениям
      * @throws BadIdException Если id не соответствует огрничениям
      */
     public SpaceMarine(
             int id, String name, Coordinates coordinates, Long health, AstartesCategory category, Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter
-    ) throws UserInputException, BadIdException {
+    ) throws ValidationFailedException {
         setId(id);
         setName(name);
         setCoordinates(coordinates);
@@ -49,52 +49,52 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         generateCreationDate();
     }
 
-    public static void checkId(int id) throws BadIdException {
+    public static void checkId(int id) throws ValidationFailedException {
         if (id <= 0)
-            throw new BadIdException("id меньше или равно 0");
+            throw new ValidationFailedException("id меньше или равно 0");
     }
 
-    public static void checkName(String name) throws UserInputException {
+    public static void checkName(String name) throws ValidationFailedException {
         if (name == null || name.isBlank())
-            throw new UserInputException("Имя не должно быть пустым");
+            throw new ValidationFailedException("Имя не должно быть пустым");
     }
 
-    public static void checkCoordinates(Coordinates coordinates) throws UserInputException {
+    public static void checkCoordinates(Coordinates coordinates) throws ValidationFailedException {
         if (coordinates == null)
-            throw new UserInputException("Значение координат не должно быть пустым");
+            throw new ValidationFailedException("Значение координат не должно быть пустым");
     }
 
-    public static void checkHealth(Long health) throws UserInputException {
+    public static void checkHealth(Long health) throws ValidationFailedException {
         if (health == null)
-            throw new UserInputException("Значение здоровья не должно быть пустым");
+            throw new ValidationFailedException("Значение здоровья не должно быть пустым");
         if (health <= 0)
-            throw new UserInputException("Значение здоровья должно быть больше 0");
+            throw new ValidationFailedException("Значение здоровья должно быть больше 0");
     }
 
-    public static void checkCategory(AstartesCategory category) throws UserInputException {
+    public static void checkCategory(AstartesCategory category) throws ValidationFailedException {
         if (category == null)
-            throw new UserInputException("Значение категории бойца не должно быть пустым");
+            throw new ValidationFailedException("Значение категории бойца не должно быть пустым");
     }
 
-    public static void checkWeaponType(Weapon weaponType) throws UserInputException {
+    public static void checkWeaponType(Weapon weaponType) throws ValidationFailedException {
         
     }
 
-    public static void checkMeleeWeapon(MeleeWeapon meleeWeapon) throws UserInputException {
+    public static void checkMeleeWeapon(MeleeWeapon meleeWeapon) throws ValidationFailedException {
 
     }
 
-    public static void checkChapter(Chapter chapter) throws UserInputException {
+    public static void checkChapter(Chapter chapter) throws ValidationFailedException {
         if (chapter == null)
-            throw new UserInputException("Подразделение бойца не должно быть пустым");
+            throw new ValidationFailedException("Подразделение бойца не должно быть пустым");
     }
 
-    public void setId(int id) throws BadIdException {
+    public void setId(int id) throws ValidationFailedException {
         checkId(id);
         super.setId(id);
     }
 
-    public void setName(String name) throws UserInputException {
+    public void setName(String name) throws ValidationFailedException {
         checkName(name);
         this.name = name;
     }
@@ -103,7 +103,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.name;
     }
 
-    public void setCoordinates(Coordinates coordinates) throws UserInputException {
+    public void setCoordinates(Coordinates coordinates) throws ValidationFailedException {
         checkCoordinates(coordinates);
         this.coordinates = coordinates;
     }
@@ -112,7 +112,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.coordinates;
     }
 
-    public void setHealth(Long health) throws UserInputException {
+    public void setHealth(Long health) throws ValidationFailedException {
         checkHealth(health);
         this.health = health;
     }
@@ -121,7 +121,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.health;
     }
 
-    public void setCategory(AstartesCategory category) throws UserInputException {
+    public void setCategory(AstartesCategory category) throws ValidationFailedException {
         checkCategory(category);
         this.category = category;
     }
@@ -130,7 +130,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.category;
     }
 
-    public void setWeaponType(Weapon weaponType) throws UserInputException {
+    public void setWeaponType(Weapon weaponType) throws ValidationFailedException {
         checkWeaponType(weaponType);
         this.weaponType = weaponType;
     }
@@ -139,7 +139,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.weaponType;
     }
 
-    public void setMeleeWeapon(MeleeWeapon meleeWeapon) throws UserInputException {
+    public void setMeleeWeapon(MeleeWeapon meleeWeapon) throws ValidationFailedException {
         checkMeleeWeapon(meleeWeapon);
         this.meleeWeapon = meleeWeapon;
     }
@@ -148,7 +148,7 @@ public class SpaceMarine extends EntityWithId implements Comparable<SpaceMarine>
         return this.meleeWeapon;
     }
 
-    public void setChapter(Chapter chapter) throws UserInputException {
+    public void setChapter(Chapter chapter) throws ValidationFailedException {
         checkChapter(chapter);
         this.chapter = chapter;
     }

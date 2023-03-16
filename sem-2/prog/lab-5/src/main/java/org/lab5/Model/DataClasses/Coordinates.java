@@ -1,6 +1,6 @@
 package org.lab5.Model.DataClasses;
 
-import org.lab5.Model.Exceptions.UserInputException;
+import org.lab5.Model.Exceptions.ValidationFailedException;
 
 /**
  * Координаты
@@ -14,9 +14,9 @@ public class Coordinates implements Comparable<Coordinates> {
      * 
      * @param x Координата X
      * @param y Координата Y
-     * @throws UserInputException Если параметры не соответствуют ограничениям
+     * @throws ValidationFailedException Если параметры не соответствуют ограничениям
      */
-    public Coordinates(Double x, Float y) throws UserInputException {
+    public Coordinates(Double x, Float y) throws ValidationFailedException {
         setX(x);
         setY(y);
     }
@@ -25,30 +25,30 @@ public class Coordinates implements Comparable<Coordinates> {
      * Проверит поле x на соответствие ограничениям
      * 
      * @param x Координата X
-     * @throws UserInputException Если не соответствует ограничениям
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public static void checkX(Double x) throws UserInputException {
+    public static void checkX(Double x) throws ValidationFailedException {
     }
     
     /**
      * Проверит поле y на соответствие ограничениям
      * 
-     * @param x Координата Y
-     * @throws UserInputException Если не соответствует ограничениям
+     * @param y Координата Y
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public static void checkY(Float y) throws UserInputException {
+    public static void checkY(Float y) throws ValidationFailedException {
         if (y == null)
-            throw new UserInputException("Значение координаты Y не должно быть пустым");
+            throw new ValidationFailedException("Значение координаты Y не должно быть пустым");
         if (y <= -273)
-            throw new UserInputException("Значение координаты Y должно быть больше -273");
+            throw new ValidationFailedException("Значение координаты Y должно быть больше -273");
     }
     
     /**
      * 
      * @param x
-     * @throws UserInputException Если не соответствует ограничениям
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public void setX(Double x) throws UserInputException {
+    public void setX(Double x) throws ValidationFailedException {
         if (x == null)
             x = 0d;
             
@@ -75,9 +75,9 @@ public class Coordinates implements Comparable<Coordinates> {
     /**
      * 
      * @param y Координата Y
-     * @throws UserInputException Если не соответствует ограничениям
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public void setY(Float y) throws UserInputException {
+    public void setY(Float y) throws ValidationFailedException {
         checkY(y);
         this.y = y;
     }

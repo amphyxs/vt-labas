@@ -1,6 +1,6 @@
 package org.lab5.Model.DataClasses;
 
-import org.lab5.Model.Exceptions.UserInputException;
+import org.lab5.Model.Exceptions.ValidationFailedException;
 
 /**
  * Подразделения солдат
@@ -15,9 +15,9 @@ public class Chapter implements Comparable<Chapter> {
      * 
      * @param name Название подразделения
      * @param world Название мира, которому принадлежит подразделение
-     * @throws UserInputException Если параметры не соответствуют ограничениям
+     * @throws ValidationFailedException Если параметры не соответствуют ограничениям
      */
-    public Chapter(String name, String world) throws UserInputException{
+    public Chapter(String name, String world) throws ValidationFailedException{
         setName(name);
         setWorld(world);
     }
@@ -26,19 +26,19 @@ public class Chapter implements Comparable<Chapter> {
      * Проверит поле name на соответствие ограничениям
      * 
      * @param name Название подразделения
-     * @throws UserInputException Если не соответствует ограничениям
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public static void checkName(String name) throws UserInputException {
+    public static void checkName(String name) throws ValidationFailedException {
         if (name == null || name.isBlank())
-            throw new UserInputException("Имя подразделения не должно быть пустым");
+            throw new ValidationFailedException("Имя подразделения не должно быть пустым");
     }
 
     /**
      * 
      * @param name Название подразделения
-     * @throws UserInputException
+     * @throws ValidationFailedException
      */
-    public void setName(String name) throws UserInputException {
+    public void setName(String name) throws ValidationFailedException {
         checkName(name);
         this.name = name;
     }
@@ -54,9 +54,9 @@ public class Chapter implements Comparable<Chapter> {
     /**
      * 
      * @param world Название мира подразделения
-     * @throws UserInputException
+     * @throws ValidationFailedException
      */
-    public  void setWorld(String world) throws UserInputException {
+    public  void setWorld(String world) throws ValidationFailedException {
         checkWorld(world);
         this.world = world;
     }
@@ -73,9 +73,9 @@ public class Chapter implements Comparable<Chapter> {
      * Проверит поле name на соответствие ограничениям
      * 
      * @param world Название подразделения
-     * @throws UserInputException Если не соответствует ограничениям
+     * @throws ValidationFailedException Если не соответствует ограничениям
      */
-    public static void checkWorld(String world) throws UserInputException {
+    public static void checkWorld(String world) throws ValidationFailedException {
 
     }
 

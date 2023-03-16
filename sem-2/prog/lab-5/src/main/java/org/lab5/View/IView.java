@@ -6,6 +6,7 @@ import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
 import org.lab5.Presenter.Commands.ICommand;
 import org.lab5.Presenter.Exceptions.InputEndedException;
+import org.lab5.Presenter.Form.IForm;
 
 /**
  * Интерфейс отображения
@@ -43,28 +44,14 @@ public interface IView {
     ICommand readCommand() throws CommandNotFoundException, BadCommandArgException, BadCommandArgsNumberException, NullCommandException, InputEndedException;
 
     /**
-     * Запросить ввести поле, являющееся числовым, строковым, булевым типом.
+     * Запросить у пользователя ввести значения в форму
      * 
-     * @param <T> Тип поля
-     * @param fieldName Имя поля
-     * @param checker Метод для проверки ограничений значения поля
-     * @param fieldClass Класс поля
-     * @param firstLastField Является ли поле первым (-1), средним (0), последним (1)
-     * @return Введённое пользователем значение в указанном типе
+     * @param <T> Тип объекта формы
+     * @param form Экземпляр формы
+     * @return Та же форма с введёнными значениями
+     * @throws InputEndedException Если вводы был прерван
      */
-    <T> T readSimpleField(String fieldName, Method checker, Class<T> fieldClass, int firstLastField) throws InputEndedException;
-
-    /**
-     * Запросить ввести поле, являющееся константой enum.
-     * 
-     * @param <T> Тип поля
-     * @param fieldName Имя поля
-     * @param checker Метод для проверки ограничений значения поля
-     * @param enumClass Класс поля
-     * @param firstLastField Является ли поле первым (-1), средним (0), последним (1)
-     * @return Введённое пользователем значение в указанном типе
-     */
-    <T extends Enum<T>> T readEnumConstant(String fieldName, Method checker, Class<T> enumClass, int firstLastField) throws InputEndedException;
+    <T> IForm<T> readForm(IForm<T> form) throws InputEndedException;
 
     /**
      * Вывести результат некоторой операции

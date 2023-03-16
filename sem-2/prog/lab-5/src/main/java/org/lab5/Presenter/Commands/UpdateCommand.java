@@ -3,6 +3,7 @@ package org.lab5.Presenter.Commands;
 import org.lab5.Model.DataClasses.SpaceMarine;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.*;
+import org.lab5.Presenter.Form.SpaceMarineForm;
 import org.lab5.Model.Exceptions.*;
 
 
@@ -20,7 +21,8 @@ public class UpdateCommand implements ICommand {
         for (SpaceMarine element : presenter.getCollection()) {
             if (element.getId() == this.id) {
                 try {
-                    SpaceMarine replaceMarine = AddCommand.readSpaceMarine(this.id, presenter.getView());
+                    SpaceMarineForm form = new SpaceMarineForm(id);
+                    SpaceMarine replaceMarine = presenter.getView().readForm(form).createObject();
                     if (replaceMarine == null)
                         return;
                     element.setName(replaceMarine.getName());
@@ -32,8 +34,10 @@ public class UpdateCommand implements ICommand {
                     element.setChapter(replaceMarine.getChapter());
                     found = true;
                     break;
-                } catch (NoSuchMethodException | UserInputException | BadIdException e) {
+                } catch (ValidationFailedException e) {
                     presenter.getView().showError(e.getMessage());
+                } catch (InputEndedException e) {
+                    return;
                 }
             }
         }

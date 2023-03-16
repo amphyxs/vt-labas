@@ -14,6 +14,7 @@ import org.lab5.Presenter.Exceptions.CommandNotFoundException;
 import org.lab5.Presenter.Exceptions.InputEndedException;
 import org.lab5.Presenter.Exceptions.NullCommandException;
 
+
 /**
  * Представление, управляемое командами. Команды - средство обмена Отображения и Представления, аналогичное событиям
  */
@@ -48,7 +49,7 @@ public class CommandsPresenter implements IPresenter {
     
     @Override
     public ICommand[] getCommands() {
-        return new ICommand[] {
+        return new ICommand[] {  // TODO: use reflection to automatically extract all classes those implement ICommand
             new HelpCommand(),
             new InfoCommand(),
             new ExitCommand(),

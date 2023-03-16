@@ -5,6 +5,7 @@ import org.lab5.Model.Exceptions.*;
 import org.lab5.Presenter.IPresenter;
 import org.lab5.Presenter.Exceptions.CommandArgNotFound;
 import org.lab5.Presenter.Exceptions.InputEndedException;
+import org.lab5.Presenter.Form.SpaceMarineForm;
 import org.lab5.View.IView;
 
 
@@ -20,39 +21,15 @@ public class AddCommand implements ICommand {
 
         try {
             int id = presenter.getCollection().generateUniqueId();
-            marine = readSpaceMarine(id, view);
-        } catch (NoSuchMethodException | UserInputException | BadIdException e) {
+            SpaceMarineForm form = new SpaceMarineForm(id);
+            marine = presenter.getView().readForm(form).createObject();
+        } catch (ValidationFailedException e) {
             view.showError(e.getMessage());
+        } catch (InputEndedException e) {
+            return;
         }
 
         presenter.getCollection().push(marine);
-    }
-
-    static SpaceMarine readSpaceMarine(Integer id, IView view) throws NoSuchMethodException, UserInputException, BadIdException {
-        String name;
-        Coordinates coordinates;
-        AstartesCategory category;
-        Long health;
-        Weapon weaponType;
-        MeleeWeapon meleeWeapon;
-        Chapter chapter;
-        try {
-            name = view.readSimpleField("имя бойца", SpaceMarine.class.getMethod("checkName", String.class), String.class, -1);
-            Double x = view.readSimpleField("координату X", Coordinates.class.getMethod("checkX", Double.class), Double.class, 0);
-            Float y = view.readSimpleField("координату Y", Coordinates.class.getMethod("checkY", Float.class), Float.class, 0);
-            coordinates = new Coordinates(x, y);
-            health = view.readSimpleField("HP бойца", SpaceMarine.class.getMethod("checkHealth", Long.class), Long.class, 0);
-            category = view.readEnumConstant("категорию бойца", SpaceMarine.class.getMethod("checkCategory", AstartesCategory.class), AstartesCategory.class, 0);
-            weaponType = view.readEnumConstant("огнестрельное оружие", SpaceMarine.class.getMethod("checkWeaponType", Weapon.class), Weapon.class, 0);
-            meleeWeapon = view.readEnumConstant("холодное оружие", SpaceMarine.class.getMethod("checkMeleeWeapon", MeleeWeapon.class), MeleeWeapon.class, 0);
-            String mainChapter = view.readSimpleField("подразделение бойца", Chapter.class.getMethod("checkName", String.class), String.class, 0);
-            String world = view.readSimpleField("название мира подразделения", Chapter.class.getMethod("checkWorld", String.class), String.class, 1);
-            chapter = new Chapter(mainChapter, world);
-        } catch (InputEndedException e) {
-            return null;
-        }
-
-        return new SpaceMarine(id, name, coordinates, health, category, weaponType, meleeWeapon, chapter);
     }
 
     @Override

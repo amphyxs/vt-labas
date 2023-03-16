@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ import org.lab5.Model.DataClasses.Weapon;
 import org.lab5.Model.Exceptions.BadIdException;
 import org.lab5.Model.Exceptions.LoadFailedException;
 import org.lab5.Model.Exceptions.SaveFailedException;
-import org.lab5.Model.Exceptions.UserInputException;
+import org.lab5.Model.Exceptions.ValidationFailedException;
 import org.lab5.Presenter.IPresenter;
 
 /**
@@ -70,7 +71,7 @@ public class JsonModel implements IModel {
                 obj = (JSONObject) element;
                 result.add(parseJsonObject(obj)); 
             }
-        } catch (ClassCastException | JSONException | ParseException | UserInputException | BadIdException e) {
+        } catch (ClassCastException | JSONException | ParseException | ValidationFailedException | BadIdException e) {
             throw new LoadFailedException("Проблема при парсинге JSON");
         }
 
@@ -112,7 +113,7 @@ public class JsonModel implements IModel {
         return obj;
     }
 
-    private SpaceMarine parseJsonObject(JSONObject obj) throws ParseException, UserInputException, BadIdException {
+    private SpaceMarine parseJsonObject(JSONObject obj) throws ParseException, ValidationFailedException, BadIdException {
         int id = obj.getInt("id");
         String name = obj.getString("name");
         Double x = obj.getJSONObject("coordinates").getDouble("x");
@@ -133,20 +134,19 @@ public class JsonModel implements IModel {
     }
 
     private String readJson() throws LoadFailedException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(getFileForReading()))) {
             String jsonData = reader.lines().reduce((a, b) -> a.strip() + b.strip()).get();
             return jsonData;
         } catch (FileNotFoundException e) {
             // TODO: использовать File для проверки прав и существования
             throw new LoadFailedException(String.format("Невозможно получить доступ к файлу \"%s\" (не найден или недостаточно прав)", getFilePath()));
-        } catch (IOException e) {
+        } catch (IOException | NoSuchElementException e) {
             throw new LoadFailedException("Не удалось прочитать файл");
         }
     }
 
     private void writeJson(String jsonData) throws SaveFailedException {
-        File outputFile = new File(getFilePath());
-        try (FileOutputStream fs = new FileOutputStream(outputFile)) {
+        try (FileOutputStream fs = new FileOutputStream(getFileForWriting())) {
             fs.write(jsonData.getBytes());
             fs.flush();
         } catch (FileNotFoundException e) {
@@ -162,6 +162,24 @@ public class JsonModel implements IModel {
             result =  Paths.get(System.getProperty("user.dir"), "spacemarines-data.json").toAbsolutePath().toString();
 
         return result;
+    }
+
+    private File getFileForReading() throws LoadFailedException {
+        File f = new File(getFilePath());
+        if (!f.exists() | !f.isFile())
+            throw new LoadFailedException(String.format("Файл \"%s\" не найден", getFilePath()));
+        if (!f.canRead())
+            throw new LoadFailedException(String.format("Недостаточно прав для чтения файла \"%s\"", getFilePath()));
+        return f;
+    }
+
+    private File getFileForWriting() throws SaveFailedException {
+        File f = new File(getFilePath());
+        if (!f.exists() | !f.isFile())
+            throw new SaveFailedException(String.format("Файл \"%s\" не найден", getFilePath()));
+        if (!f.canWrite())
+            throw new SaveFailedException(String.format("Недостаточно прав для записи файла \"%s\"", getFilePath()));
+        return f;
     }
 
 }

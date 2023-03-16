@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import org.lab5.Model.DataClasses.EntityWithId;
 import org.lab5.Model.DataClasses.SpaceMarine;
 import org.lab5.Model.Exceptions.BadIdException;
+import org.lab5.Model.Exceptions.ValidationFailedException;
 
 /**
  * Коллекция данных в виде стека
@@ -61,7 +62,7 @@ public class DataStack<E extends EntityWithId> extends Stack<E> implements IData
         for (int id = 1; id < Integer.MAX_VALUE; id++) {
             try {
                 SpaceMarine.checkId(id);
-            } catch (BadIdException e) {
+            } catch (ValidationFailedException e) {
                 continue;
             }
             if (!getAllIds().contains(id))
