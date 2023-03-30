@@ -1,0 +1,5 @@
+/**
+ * Исключения представления
+ */
+package lab6.server.Presenter.Exceptions;
+
