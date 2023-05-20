@@ -131,4 +131,11 @@ public class UpdateCommand extends AbstractFormCommand<SpaceMarine> {
         this.form = (SpaceMarineForm) form;
     };
 
+    public void getFilledForm(Presenter presenter) {
+        for (SpaceMarine sp : presenter.getCollection()) {
+            if (sp.getId() == this.id) {
+            }
+        }
+    }
+
 }

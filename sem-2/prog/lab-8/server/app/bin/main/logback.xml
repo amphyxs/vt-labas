@@ -1,0 +1,42 @@
+<configuration>
+  <property name="LOG_DIR" value="./logs" />
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="SIMPLEFILE" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/tests.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+  </appender>
+
+  <appender name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- <file>slf4jlogbackexample.log</file> -->
+    <rollingPolicy
+        class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- daily rollover -->
+        <fileNamePattern>${LOG_DIR}/lab7.server.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+        <!-- Храним файлы логов 10 дней -->
+        <maxHistory>10</maxHistory>
+
+        <!-- Максимальный размер файлов лога 10 гигабайт -->
+        <totalSizeCap>10GB</totalSizeCap>
+
+    </rollingPolicy>
+    <encoder>
+        <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </root>
+</configuration>

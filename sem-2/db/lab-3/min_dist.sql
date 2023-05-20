@@ -1,12 +1,13 @@
-CREATE OR REPLACE FUNCTION min_dist(a integer, b integer) RETURNS integer AS $$
+CREATE OR REPLACE FUNCTION min_dist(a int, b int) RETURNS integer AS $$
     DECLARE
-        min_dists int[];
-        is_visited boolean[];
-        d int;
-        v int;
-        n int;
-        u int;
-        qres record;
+        min_dists int[];  -- Массив найденных мин. расстояний от вершины 1 до всех других
+        is_visited boolean[];  -- Массив отметок каждой вершины о её посещении 
+        d int;  -- Переменная для подсчёта расстояний
+        v int;  -- Переменная для итерируемой вершины
+        n int;  -- Количество вершин
+        u int;  -- Переменная для вершнины, смежной с итерируемой
+        qres record;  -- Строка для поиска смежных вершин
+        result int;  -- Переменная для сохранения результата работы функции
     BEGIN
         -- Получение числа вершин
         SELECT count(*) INTO n
@@ -14,8 +15,8 @@ CREATE OR REPLACE FUNCTION min_dist(a integer, b integer) RETURNS integer AS $$
 
         -- Проверка на некорректные значение
         IF a < 1 OR a > n OR b < 1 OR b > n THEN
-            RAISE NOTICE 'Некорректные значения a или b';
-            RETURN -1;
+            RAISE EXCEPTION 'Некорректные значения a или b';
+            RETURN NULL;
         END IF;
 
         -- Массив найденных расстояний от a
@@ -68,10 +69,24 @@ CREATE OR REPLACE FUNCTION min_dist(a integer, b integer) RETURNS integer AS $$
 
         -- Результат с проверкой на существование пути
         IF min_dists[b] = 10000 THEN
-            RETURN -1;
+            result := NULL;
         ELSE
-            RETURN min_dists[b];
+            result := min_dists[b];
         END IF;
 
+        RETURN result;
+    END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION update_min_distances() RETURNS trigger AS $$
+    -- Вспомогательная функиция, вызывающая перегенерацию всех значений минимальных расстояний
+    -- для каждой записи в таблице min_distances
+    BEGIN
+        UPDATE min_distances 
+        SET territory1_id = territory1_id;
+        RETURN NEW;
     END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER distances_update AFTER INSERT OR UPDATE OR DELETE ON distances
+FOR EACH ROW EXECUTE PROCEDURE update_min_distances();

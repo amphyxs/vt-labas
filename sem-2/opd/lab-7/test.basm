@@ -1,0 +1,188 @@
+	ORG	0x0E0
+	LD	#0x01	; Тест: 1 - 0 = 1, прямая абсолютная адресация
+	PUSH
+	LD	#0x00
+	PUSH
+	LD	$T1_OP
+	PUSH
+	LD	#0x01
+	PUSH
+	CALL	TEST
+	POP
+	POP
+	POP
+	ST	$T1_RES
+	POP
+	ST	$T1_CHK
+	HLT			; Breakpoint
+	LD	#0x01	; Тест: 1 - 1 = 0, косвенная относительная адресация
+	PUSH
+	LD	#0x01
+	PUSH
+	LD	$T2_OP
+	PUSH
+	LD	#0x00
+	PUSH
+	CALL	TEST
+	POP
+	POP
+	POP
+	ST	$T2_RES
+	POP
+	ST	$T2_CHK
+	HLT		; Breakpoint
+	LD	#0x00	; Тест: 0 - 1 = FFFF, косвенная автоинкрементная адресация
+	PUSH
+	LD	#0x01
+	PUSH
+	LD	$T3_OP
+	PUSH
+	LD	#0xFF
+	PUSH
+	CALL	TEST
+	POP
+	POP
+	POP
+	ST	$T3_RES
+	POP
+	ST	$T3_CHK
+	HLT		; Breakpoint
+	LD	#0x02	; Тест: 2 - 1 = 1, косвенная автодекрементная адресация
+	PUSH
+	LD	#0x01
+	PUSH
+	LD	$T4_OP
+	PUSH
+	LD	#0x01
+	PUSH
+	CALL	TEST
+	POP
+	POP
+	POP
+	ST	$T4_RES
+	POP
+	ST	$T4_CHK
+	HLT		; Breakpoint
+	LD	#0x80	; Тест: FF80 - 1A = FF66, прямая относительная адресация
+	PUSH
+	LD	#0x1A
+	PUSH
+	LD	$T5_OP
+	PUSH
+	LD	$T5_ANS
+	PUSH
+	CALL	TEST
+	POP
+	POP
+	POP
+	ST	$T5_RES
+	POP
+	ST	$T5_CHK
+T5_ANS:	WORD	0xFF66	; Вспомогательная ячейка для загрузки результата теста 5
+	HLT		; Breakpoint
+	LD	#0x05	; Тест: 5 - 1F = FFE6, косвенная относительная, со смещением (SP) адресация
+	PUSH		
+	LD	$T6_OP	
+	ST	SPOPER	
+	LD	#0x1F
+	HLT		; Breakpoint		
+SPOPER:	NOP
+	HLT		; Breakpoint
+	POP		
+	ST	$T6_RES
+	HLT		; Breakpoint
+	CMP	#0xE6
+	BEQ	SPPASS	 
+	LD	#0x00	
+	JUMP	SPRES
+SPPASS:	LD	#0x01	
+SPRES:	ST	$T6_CHK
+	HLT		; Breakpoint
+	LD	$T7_OP	; Тест: 5 - 3 = 2, прямая загрузка операнда
+	ST	FOPER	
+	LD	#0x03	
+	HLT		; Breakpoint	
+FOPER:	NOP
+	HLT		; Breakpoint
+	LD	FOPER
+	ST	$T7_RES
+	HLT		; Breakpoint
+	CMP	#0x02
+	BEQ	FPASS	 
+	LD	#0x00	
+	JUMP	FRES
+FPASS:	LD	#0x01	
+FRES:	ST	$T7_CHK
+	HLT		; Breakpoint
+	LD	#0x01	; Проверка выполнения всех тестов
+	AND	$T1_CHK
+	AND	$T2_CHK
+	AND	$T3_CHK
+	AND	$T4_CHK
+	AND	$T5_CHK
+	AND	$T6_CHK
+	AND	$T7_CHK
+	ST	ALL_CHK
+	HLT
+
+	ORG	0x160	; Универсальная подпрограмма для тестирования операции
+			; Принимает 4 аргумента:
+			; 1) Значение ячейки памяти - уменьшаемое
+			; 2) Значение аккумулятора - вычитаемое
+			; 3) Код операции для тестирования
+			; 4) Результат для проверки
+			; Возвращает 2 значения:
+			; 1) 1, если тест пройден 0, если тест провален
+			; 2) Вычисленное тестируемой операцией значение
+TEST:	LD	&0x04	; Загрузить уменьшаемое
+	ST	X	; Сохранить уменьшаемое
+	HLT		; Breakpoint
+	LD	&0x02	; Загурзить КОП
+	ST	OPER	; Сохранить КОП
+	LD	&0x03	; Загрузить вычитаемое
+	HLT		; Breakpoint
+OPER:	NOP		; Исполнить КОП, Address = 167
+	HLT		; Breakpoint
+	LD	X	; Загрузить результат
+	ST	&0x03	; Сохранить вычисленное значение	
+	HLT		; Breakpoint
+	LD	&0x01	; Загрузить результат для проверки 
+	CMP	X	; Сравнить с получившимся результатом
+	BEQ	PASSED	; В случае равенства - тест пройден	
+	LD	#0x00	; Загружаем отметку о провале теста
+	JUMP	ST_RES	; Переходим к сохранению
+PASSED:	LD	#0x01	; Иначе загружаем отметку о прохождении теста
+ST_RES:	ST	&0x04	; Сохранить возвращаемое значение
+	RET
+	WORD	$X	; Вспомогательная ячейка для косвенной относительной и автоинкрементной адресации, Address = 172
+	WORD	$T1_RES	; Вспомогательная ячейка для косвенной автодекрементной адресации, Address = 173
+
+	ORG	0x180
+X:	WORD	?
+T1_RES:	WORD	?
+T2_RES:	WORD	?
+T3_RES:	WORD	?
+T4_RES:	WORD	?
+T5_RES:	WORD	?
+T6_RES:	WORD	?
+T7_RES:	WORD	?
+
+	ORG	0x191
+T1_CHK:	WORD	?
+T2_CHK:	WORD	?
+T3_CHK:	WORD	?
+T4_CHK:	WORD	?
+T5_CHK:	WORD	?
+T6_CHK:	WORD	?
+T7_CHK:	WORD	?
+	NOP
+ALL_CHK:WORD	?
+
+	ORG	0x1A0
+T1_OP:	WORD	0x9190
+T2_OP:	WORD	0x980C
+T3_OP:	WORD	0x9A0C
+T4_OP:	WORD	0x9B0D
+T5_OP:	WORD	0x9E18
+T6_OP:	WORD	0x9C00
+T7_OP:	WORD	0x9F05
