@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="index.js"></script>
+    <title>Lab 1</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <h1>Lab 1</h1>
+                </td>
+                <td id="lab-info">
+                    Сандов Кирилл Алексеевич / P3213 / Вариант 2310
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="main.png"/>
+                </td>
+                <td>
+                    <form action="results.php" method="post">
+                        <table>
+                            <tr>
+                                <td class="form-label">X:</td>
+                                <td><input name="x" id="x-coord-input"/></td>
+                            </tr>
+                            <tr>
+                                <td class="form-label">Y:</td>
+                                <td><input name="y" id="y-coord-input"/></td>
+                            </tr>
+                            <tr>
+                                <td class="form-label">R:</td>
+                                <td>
+                                    <select name="r">
+                                        <option>1</option>
+                                        <option>1.5</option>
+                                        <option>2</option>
+                                        <option>2.5</option>
+                                        <option>3</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="timezone" id="timezone-input" value="UTC"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="submit" id="coords-submit" value="Отправить"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

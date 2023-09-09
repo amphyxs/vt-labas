@@ -1,0 +1,6 @@
+cat test | grep ^.$
+cat test | grep -E [0-9]+
+cat test | grep -E ^[-*+/0-9]+$
+cat test | grep -E ^[[:alpha:]]{3}$
+cat test | grep -E ^$
+cat test | grep -v -E ^[[:alpha:]]+$

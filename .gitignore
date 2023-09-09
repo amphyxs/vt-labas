@@ -2,3 +2,5 @@
 **/.idea/
 **/.vscode/*
 **/.idea/*
+**/helios_pas
+**/deploy.sh

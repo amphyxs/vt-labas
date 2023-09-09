@@ -1,0 +1,105 @@
+body {
+    background-color: #2E3440;
+}
+
+table {
+    width: 100%;
+    padding: 0 50px;
+    border-spacing: 1vw;
+}
+
+thead {
+    width: 100%;
+}
+
+thead h1 {
+    color: #88C0D0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#lab-info {
+    color: #88C0D0;
+    text-align: right;
+    font-size: 17pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+tbody tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    background-color: #3B4252;
+    border-radius: 20px;
+}
+
+form {
+    margin: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-label {
+    color: #E5E9F0;
+    font-size: 19pt;
+    font-family: inherit;
+}
+
+form table {
+    border-spacing: 10px;
+}
+
+form input {
+    width: 70%;
+    height: 30px;
+    font-size: 15pt;
+    font-family: inherit;
+}
+
+form select {  /* Каскадирование - часть 1 */
+    width: 70.8%;
+    height: 34px;
+    font-size: 15pt;
+    font-family: inherit;
+}
+
+form input, form select {   /* Каскадирование - часть 2 */
+    border: 1px solid #8FBCBB;
+    border-radius: 5px;
+    background-color: #4C566A;
+    color: #D8DEE9;
+}
+
+img {
+    border-radius: 20px;
+}
+
+form input:disabled {
+    filter: brightness(75%);
+    cursor: default !important;
+}
+
+#coords-submit {
+    cursor: pointer;
+    height: 34px;
+}
+
+form table {
+    height: clamp(20vw, 200px, 100vw);
+}
+
+table img {
+    width: clamp(20vw, 200px, 100vw);
+    height: clamp(20vw, 200px, 100vw);
+}
+
+@media (max-width: 700px) {  /* Селектор дочерних элементов */
+    body > table > * > tr > td {
+        display: block;
+        margin-bottom: 10px;
+        text-align: center !important;
+    }
+}

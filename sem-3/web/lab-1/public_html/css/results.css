@@ -1,0 +1,48 @@
+body {
+    background-color: #2E3440;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+table thead {
+    background-color: #434C5E;
+}
+
+table thead td {
+    color: #81A1C1;
+    font-size: 17pt;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+table tbody td {
+    color: #E5E9F0;
+    text-align: center;
+    font-size: 15pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#hit-checkbox {
+    display: grid;
+    place-content: center;
+    margin: auto;
+}
+
+#hit-checkbox::before {  /* Селектор псевдоэлемента */
+    background-color: #4C566A !important;
+    content: "";
+    width: 0.95em;
+    height: 0.95em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #BF616A;
+}
+
+#hit-checkbox:checked::before {
+    transform: scale(0.8);
+}
