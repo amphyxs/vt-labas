@@ -53,7 +53,8 @@ const openResults = () => {
     else
         pathname = window.location.pathname;
 
-    window.location = `${window.location.protocol}//${window.location.host}${pathname}results.php`;
+    const timezoneString = window.Intl.DateTimeFormat().resolvedOptions().timeZone;
+    window.location = `${window.location.protocol}//${window.location.host}${pathname}results.php?timezone=${timezoneString}`;
 }
 
 window.onload = () => {

@@ -121,6 +121,8 @@
 
         function update_and_get_data(float $x, float $y, float $r, string $timezone): array
         {
+            date_default_timezone_set($timezone);
+
             global $time_start;
 
             $hit_data = get_data();
@@ -134,7 +136,7 @@
             return $hit_data;
         }
 
-        function print_table(array $table_rows): void
+        function print_table(array $table_rows, string $timezone): void
         {
             echo "
             <table>
@@ -151,7 +153,9 @@
                 <tbody>
             ";
             foreach ($table_rows as $key => $row) {
-                echo unserialize($row);
+                $object = unserialize($row);
+                $object->date->setTimeZone(new DateTimeZone($timezone));
+                echo $object;
             }
             echo "
                 </tbody>
@@ -162,14 +166,22 @@
         $x = truncate_number($_POST['x']  ?? null);
         $y = truncate_number($_POST['y'] ?? null);
         $r = truncate_number($_POST['r'] ?? null);
-        $timezone = $_POST['timezone'] ?? 'UTC';
+        if (array_key_exists('timezone', $_POST)) {
+            $timezone = $_POST['timezone'];
+        } else {
+            $queries = array();
+            parse_str($_SERVER['QUERY_STRING'], $queries);
+            $timezone = $queries['timezone'] ?? null;
+        }
 
         if (validate_coords_data($x, $y, $r)) {
             $rows = update_and_get_data($x, $y, $r, $timezone);
-            print_table($rows);
+            $rows = array_reverse($rows);
+            print_table($rows, $timezone);
         } else if ($x == null && $y == null && $r == null) {
             $rows = get_data();
-            print_table($rows);
+            $rows = array_reverse($rows);
+            print_table($rows, $timezone);
         } else {
             http_response_code(400);
             echo "<p>Invalid data</p>";
