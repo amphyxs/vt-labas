@@ -17,7 +17,7 @@ table thead td {
     border-radius: 8px;
     padding: 10px;
     text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 table tbody td {
@@ -40,7 +40,7 @@ table tbody td {
     height: 0.95em;
     transform: scale(0);
     transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em #BF616A;
+    box-shadow: inset 1em 1em #31ff46;
 }
 
 #hit-checkbox:checked::before {

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/results.css">
+    <link rel="stylesheet" href="css/resultss.css">
+    <link rel="icon" type="image/png" href="favicon.png">
     <title>Results</title>
 </head>
 <body>
@@ -112,11 +113,17 @@
             return substr($num_str, 0, $max_digits);
         }
 
+        function get_data(): array
+        {
+            $hit_data = $_SESSION['hit_data'] ?? array();
+            return $hit_data;
+        }
+
         function update_and_get_data(float $x, float $y, float $r, string $timezone): array
         {
             global $time_start;
-            
-            $hit_data = $_SESSION['hit_data'] ?? array();
+
+            $hit_data = get_data();
             
             $time_end = microtime(true);
             $execution_time = $time_end - $time_start;
@@ -160,8 +167,10 @@
         if (validate_coords_data($x, $y, $r)) {
             $rows = update_and_get_data($x, $y, $r, $timezone);
             print_table($rows);
-        }
-        else {
+        } else if ($x == null && $y == null && $r == null) {
+            $rows = get_data();
+            print_table($rows);
+        } else {
             http_response_code(400);
             echo "<p>Invalid data</p>";
         }

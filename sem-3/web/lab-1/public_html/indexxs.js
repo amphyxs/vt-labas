@@ -47,9 +47,19 @@ const setClientTimezone = (htmlInput) => {
     htmlInput.value = timezoneString;
 }
 
+const openResults = () => {
+    if (window.location.pathname.includes('index.html'))
+        pathname = window.location.pathname.replace('index.html', '');
+    else
+        pathname = window.location.pathname;
+
+    window.location = `${window.location.protocol}//${window.location.host}${pathname}results.php`;
+}
+
 window.onload = () => {
     document.getElementById('coords-submit').disabled = true;
     document.getElementById('x-coord-input').addEventListener('input', validateCoordsForm);
     document.getElementById('y-coord-input').addEventListener('input', validateCoordsForm);
+    document.getElementById('coords-results').addEventListener('click', openResults);
     setClientTimezone(document.getElementById('timezone-input'));
 };
