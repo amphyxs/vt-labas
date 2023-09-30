@@ -96,11 +96,12 @@
         {
             $r_expected_values = array(1, 1.5, 2, 2.5, 3);
 
-            $is_x_valid = isset($x) && $x > -3 && $x < 3;
-            $is_y_valid = isset($y) && $y > -3 && $y < 3;
-            $is_r_valid = isset($r) && in_array($r, $r_expected_values);
+            $is_x_valid = isset($x) && is_numeric($x) && $x > -3 && $x < 3;
+            $is_y_valid = isset($y) && is_numeric($y) && $y > -3 && $y < 3;
+            $is_r_valid = isset($r) && is_numeric($r) && in_array($r, $r_expected_values);
 
             $is_correct = $is_x_valid && $is_y_valid && $is_r_valid;
+
             return $is_correct;
         }
 

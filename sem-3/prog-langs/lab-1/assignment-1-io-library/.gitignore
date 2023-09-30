@@ -1,0 +1,9 @@
+/parse_*
+/read_*
+/print_*
+/string_*
+/report.xml
+debug
+lib
+*.o
+__pycache__/
